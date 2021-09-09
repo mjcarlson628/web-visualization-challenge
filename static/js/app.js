@@ -19,6 +19,12 @@ function init() {
         type: "bar",
         orientation: "h"
     }];
+    let barLayout = {
+        title: {
+            text: "<b>Top OTUs</b>",
+            font: {size: 24}
+        }
+    };
 // Initial bubble chart
     let initBubble = [{
         x: otuidInit,
@@ -75,7 +81,7 @@ function init() {
         }
     };
 // Create the charts
-    Plotly.newPlot("bar", initBar);
+    Plotly.newPlot("bar", initBar, barLayout);
     Plotly.newPlot("bubble", initBubble, bubbleLayout);
     Plotly.newPlot("gauge", initGauge, gaugeLayout);
 };
