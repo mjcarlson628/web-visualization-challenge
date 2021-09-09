@@ -30,6 +30,7 @@ function init() {
         x: otuidInit,
         y: sampleInit,
         mode: "markers",
+        text: samples[0].otu_labels,
         opacity: 0.75,
         marker: {
             color: otuidInit,
@@ -122,6 +123,7 @@ function optionChanged() {
 // Restyle bubble chart to match new id number
                     Plotly.restyle("bubble", "x", [samples[j].otu_ids]);
                     Plotly.restyle("bubble", "y", [samples[j].sample_values]);
+                    Plotly.restyle("bubble", "text", [samples[j].otuLabels]);
                     Plotly.restyle("bubble", "marker.size", [samples[j].sample_values.map(item => item * 25)]);
                     Plotly.restyle("bubble", "marker.color", [samples[j].otu_ids]);
 // Update gauge
