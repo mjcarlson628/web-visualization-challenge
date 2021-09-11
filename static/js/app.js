@@ -29,14 +29,13 @@ function init() {
     let initBubble = [{
         x: otuidInit,
         y: sampleInit,
-        mode: "markers",
         text: samples[0].otu_labels,
         opacity: 0.75,
+        mode: "markers",
         marker: {
             color: otuidInit,
             colorscale: 'Jet',
-            size: sampleInit.map(item => item * 25),
-            sizemode: "area"
+            size: sampleInit.map(value => value/1.5)
         },
     }];
     let bubbleLayout = {
@@ -45,14 +44,14 @@ function init() {
         }
     };
 // Dropdown menu to select id number
-    let dropdownMenu = d3.select("select");
+    let dropdownMenu = d3.select("#selDataset");
     for (let m = 0; m < data.names.length; m++) {
         dropdownMenu.append("option").text(data.names[m]);
     };
 // Demographic info
-    let demographic = d3.select(".panel-body");
+    let demographic = d3.select("#sample-metadata");
     for (let d = 0; d < Object.keys(metadata[0]).length; d++) {
-        demographic.append("p").text(`${Object.keys(metadata[0])[d]}: ${Object.values(metadata[0])[d]}`)
+        demographic.append("p").html(`<b>${Object.keys(metadata[0])[d]}:</b> ${Object.values(metadata[0])[d]}`)
     };
 // Weekly scrubs gauge
     let initGauge = [{
@@ -100,10 +99,10 @@ function optionChanged() {
 // Demographic info for new id
     for (let i = 0; i < metadata.length; i++) {
         if (metadata[i].id==id) {
-            let demographic = d3.selectAll(".panel-body");
-            demographic.text("");
+            let demographic = d3.selectAll("#sample-metadata");
+            demographic.html("");
             for (let d = 0; d < Object.keys(metadata[i]).length; d++) {
-                demographic.append("p").text(`${Object.keys(metadata[i])[d]}: ${Object.values(metadata[i])[d]}`)
+                demographic.append("p").html(`<b>${Object.keys(metadata[i])[d]}:</b> ${Object.values(metadata[i])[d]}`)
             };
 // Match metadata id with samples id
             for (let j = 0; j < samples.length; j++) {
@@ -124,7 +123,7 @@ function optionChanged() {
                     Plotly.restyle("bubble", "x", [samples[j].otu_ids]);
                     Plotly.restyle("bubble", "y", [samples[j].sample_values]);
                     Plotly.restyle("bubble", "text", [samples[j].otuLabels]);
-                    Plotly.restyle("bubble", "marker.size", [samples[j].sample_values.map(item => item * 25)]);
+                    Plotly.restyle("bubble", "marker.size", [samples[j].sample_values.map(value => value/1.5)]);
                     Plotly.restyle("bubble", "marker.color", [samples[j].otu_ids]);
 // Update gauge
                     Plotly.restyle("gauge", "value", metadata[i].wfreq)
@@ -133,6 +132,5 @@ function optionChanged() {
         };
     };
 };
-
 
 init();
